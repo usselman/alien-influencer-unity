@@ -23,6 +23,6 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points; // Increase the score
-        scoreText.text = "" + score; // Update the UI
+        scoreText.text = "Score: " + score; // Update the UI
     }
 }
