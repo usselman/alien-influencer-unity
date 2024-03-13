@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class UfoMovement : MonoBehaviour
 {
-    public float speed = 5.0f; // Movement speed of the UFO
-    public float laneChangeSpeed = 10.0f; // Speed of changing lanes
+    public float speed = 10.0f; // Movement speed of the UFO
+    public float laneChangeSpeed = 20.0f; // Speed of changing lanes
     private float targetZPosition = 0; // Target Z position for lane switching
+
+    // Define bounds for the UFO's x position
+    private float minXPosition = -25f;
+    private float maxXPosition = 25f;
 
     private void Update()
     {
         // Handle left-right movement
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 lateralMovement = new Vector3(horizontalInput, 0, 0) * speed * Time.deltaTime;
-        transform.Translate(lateralMovement);
+
+        // Calculate new position and ensure it's within bounds
+        Vector3 newPosition = transform.position + lateralMovement;
+        newPosition.x = Mathf.Clamp(newPosition.x, minXPosition, maxXPosition);
+
+        // Apply the lateral movement within bounds
+        transform.position = newPosition;
 
         // Handle up-down keys for changing lanes
         if (Input.GetKeyDown(KeyCode.UpArrow) && targetZPosition < 25)
