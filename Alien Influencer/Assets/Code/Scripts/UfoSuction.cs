@@ -8,12 +8,25 @@ public class UfoSuction : MonoBehaviour
     public LayerMask personLayer;
     public GameObject suctionEffectPrefab; // Reference to the particle effect prefab
     public GameObject suctionEffectTrailPrefab; // Reference to the suction trail prefab
+    public ParticleSystem suctionConeEffect;
 
     private void Update()
     {
         if (Input.GetKey(KeyCode.Z))
         {
             SuckUpPeople();
+            if (!suctionConeEffect.isPlaying)
+            {
+                suctionConeEffect.Play();
+            }
+
+        }
+        else
+        {
+            if (suctionConeEffect.isPlaying)
+            {
+                suctionConeEffect.Stop();
+            }
         }
     }
 
