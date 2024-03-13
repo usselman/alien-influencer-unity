@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7379480113005494661}
   - component: {fileID: 4076450301846365011}
   - component: {fileID: 3828208869950288935}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PersonSphere
   m_TagString: Person
   m_Icon: {fileID: 0}

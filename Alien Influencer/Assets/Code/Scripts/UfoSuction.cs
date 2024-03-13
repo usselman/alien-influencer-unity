@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class UfoSuction : MonoBehaviour
 {
-    public float suctionRadius = 20f; // Radius of the suction effect
-    public float suctionPower = 10f; // Strength of the suction effect
+    public float suctionRadius = 10f; // Radius of the suction effect
+    public float suctionPower = 50f; // Strength of the suction effect
+    public LayerMask personLayer; // Layer of the person objects for optimized searching
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Z))
         {
@@ -14,30 +14,41 @@ public class UfoSuction : MonoBehaviour
         }
     }
 
-    void SuckUpPeople()
+    private void SuckUpPeople()
     {
-        // Find all colliders within the suction radius
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, suctionRadius);
+        // Find all colliders within the suction radius that are on the "Person" layer
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, suctionRadius, personLayer);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Person")) // Ensure the object has a "Person" tag
+            Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    Vector3 directionToUfo = (transform.position - hitCollider.transform.position).normalized;
-                    // Apply force based on distance to UFO
-                    float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-                    float suctionEffect = 1 - (distance / suctionRadius); // Stronger when closer
-                    rb.AddForce(directionToUfo * suctionPower * suctionEffect, ForceMode.Acceleration);
+                Vector3 directionToUfo = (transform.position - hitCollider.transform.position).normalized;
+                // Separate distance calculation into vertical and horizontal components for differential falloff
+                float verticalDistance = Mathf.Abs(transform.position.y - hitCollider.transform.position.y);
+                float horizontalDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hitCollider.transform.position.x, hitCollider.transform.position.z));
 
-                    // Destroy the object if it's close enough to the UFO
-                    if (hitCollider.transform.position.y >= 9f && distance < 2.5f)
-                    {
-                        Destroy(hitCollider.gameObject);
-                    }
+                // Calculate suction effect with more aggressive falloff
+                float suctionEffect = CalculateSuctionEffect(horizontalDistance, verticalDistance);
+
+                rb.AddForce(directionToUfo * suctionPower * suctionEffect, ForceMode.Acceleration);
+
+                // Destroy the object if it's close enough to the UFO
+                if (hitCollider.transform.position.y >= 10f)
+                {
+                    Destroy(hitCollider.gameObject);
                 }
             }
         }
+    }
+
+    private float CalculateSuctionEffect(float horizontalDistance, float verticalDistance)
+    {
+        // Apply a more aggressive falloff for the suction effect based on distance
+        float horizontalEffect = 1 - Mathf.Pow(horizontalDistance / suctionRadius, 2);
+        float verticalEffect = 1 - Mathf.Pow(verticalDistance / suctionRadius, 2);
+
+        // Combine effects, prioritizing vertical alignment (directly underneath) for stronger suction
+        return Mathf.Clamp(horizontalEffect * verticalEffect, 0, 1);
     }
 }
