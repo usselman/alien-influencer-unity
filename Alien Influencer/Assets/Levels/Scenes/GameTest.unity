@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 93865854}
   - component: {fileID: 93865853}
   - component: {fileID: 93865857}
+  - component: {fileID: 93865858}
   m_Layer: 0
   m_Name: UFO
   m_TagString: Untagged
@@ -244,6 +245,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   laneChangeSpeed: 20
+--- !u!114 &93865858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93865852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393217a412d5843ff9a51fb5b184e674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suctionRadius: 15
+  suctionPower: 10
 --- !u!1 &196975807
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,10 +302,10 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.972549, g: 0.65196276, b: 0.16078427, a: 1}
-  m_Intensity: 10
+  m_Color: {r: 0.7688679, g: 0.90067166, b: 1, a: 1}
+  m_Intensity: 15
   m_Range: 25
-  m_SpotAngle: 65
+  m_SpotAngle: 66
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -489,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   personPrefab: {fileID: 2023676443861224507, guid: 4674f574617b44b399a116f1bf3276f2, type: 3}
-  spawnInterval: 0.1
+  spawnInterval: 0.15
 --- !u!1 &666352717
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,8 +639,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.64435744, g: 0.6679294, b: 0.754717, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0, g: 0.03418994, b: 0.18867922, a: 1}
+  m_Intensity: 5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082

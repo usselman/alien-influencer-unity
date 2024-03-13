@@ -40,6 +40,10 @@ public class PeopleWalker : MonoBehaviour
 
         // Assign movement details to the person
         person.AddComponent<PersonMovement>().Initialize(moveDirection);
+
+        // Assign random scale to the person
+        float scale = Random.Range(0.5f, 1f);
+        person.transform.localScale = new Vector3(scale, scale, scale);
     }
 }
 
