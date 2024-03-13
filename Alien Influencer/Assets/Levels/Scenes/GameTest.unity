@@ -265,6 +265,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   suctionEffectPrefab: {fileID: 2273582932845106032, guid: a6a8574342ff24218b4c3155612b0b5e, type: 3}
+  suctionEffectTrailPrefab: {fileID: 3873450797865035935, guid: e9b949e5510104df2ad6c4150427ec9d, type: 3}
 --- !u!1 &196975807
 GameObject:
   m_ObjectHideFlags: 0

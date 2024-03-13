@@ -7,6 +7,7 @@ public class UfoSuction : MonoBehaviour
     public int scorePoint = 10;
     public LayerMask personLayer;
     public GameObject suctionEffectPrefab; // Reference to the particle effect prefab
+    public GameObject suctionEffectTrailPrefab; // Reference to the suction trail prefab
 
     private void Update()
     {
@@ -31,9 +32,14 @@ public class UfoSuction : MonoBehaviour
 
                 rb.AddForce(directionToUfo * suctionPower * suctionEffect, ForceMode.Acceleration);
 
+                if (hitCollider.transform.Find(suctionEffectTrailPrefab.name + "(Clone)") == null) // Check if the trail is not already instantiated for this object
+                {
+                    Instantiate(suctionEffectTrailPrefab, hitCollider.transform.position, Quaternion.identity, hitCollider.transform);
+                }
+
                 if (horizontalDistance <= 2.5f && verticalDistance <= 1.5f)
                 {
-                    InstantiateSuctionEffect(hitCollider.transform.position); // Instantiate the particle effect
+                    InstantiateSuctionParticleEffect(hitCollider.transform.position); // Instantiate the particle effect
                     Destroy(hitCollider.gameObject);
                     ScoreManager.instance.AddScore(scorePoint); // Increase the score
                 }
@@ -48,8 +54,14 @@ public class UfoSuction : MonoBehaviour
         return Mathf.Clamp(horizontalEffect * verticalEffect, 0, 1);
     }
 
-    private void InstantiateSuctionEffect(Vector3 position)
+    private void InstantiateSuctionParticleEffect(Vector3 position)
     {
         Instantiate(suctionEffectPrefab, position, Quaternion.identity);
+    }
+
+    private void InstantiateSuctionTrail(Vector3 position)
+    {
+        // Instantiate the suction trail effect
+        GameObject trail = Instantiate(suctionEffectTrailPrefab, position, Quaternion.identity);
     }
 }
