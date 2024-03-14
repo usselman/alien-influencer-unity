@@ -3,7 +3,7 @@ using UnityEngine;
 public class PeopleWalker : MonoBehaviour
 {
     public GameObject personPrefab; // Assign the 3D Cube prefab
-    public float spawnInterval = 0.25f; // Time between each spawn
+    public float spawnInterval = 0.1f; // Time between each spawn
     private float timer;
 
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class PeopleWalker : MonoBehaviour
                                                             // Randomize the z position within the lane
         float zOffset = Random.Range(-3.0f, 3.0f);
         // Choose a side for the person to start from
-        float xPosition = Random.Range(0, 2) == 0 ? -50 : 50;
+        float xPosition = Random.Range(0, 2) == 0 ? -120 : 120;
         Vector3 spawnPosition = new Vector3(xPosition, 0, zPosition + zOffset);
 
         // Instantiate the person prefab
@@ -62,7 +62,7 @@ class PersonMovement : MonoBehaviour
     void Update()
     {
         // Check if the person has reached the edge and destroy if true
-        if (Mathf.Abs(transform.position.x) > 50)
+        if (Mathf.Abs(transform.position.x) > 150)
         {
             Destroy(gameObject);
         }

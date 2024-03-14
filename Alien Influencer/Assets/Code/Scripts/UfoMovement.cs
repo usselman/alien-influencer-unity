@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class UfoMovement : MonoBehaviour
 {
-    public float speed = 10.0f; // Movement speed of the UFO
-    public float laneChangeSpeed = 20.0f; // Speed of changing lanes
+    public float speed = 20.0f; // Movement speed of the UFO
+    public float laneChangeSpeed = 25.0f; // Speed of changing lanes
     private float targetZPosition = 0; // Target Z position for lane switching
 
     // Define bounds for the UFO's x position
-    private float minXPosition = -25f;
-    private float maxXPosition = 25f;
+    private float minXPosition = -80f;
+    private float maxXPosition = 80f;
 
     private void Update()
     {
