@@ -30,7 +30,7 @@ public class PeopleWalker : MonoBehaviour
                                                             // Randomize the z position within the lane
         float zOffset = Random.Range(-3.0f, 3.0f);
         // Choose a side for the person to start from
-        float xPosition = Random.Range(0, 2) == 0 ? -120 : 120;
+        float xPosition = Random.Range(0, 2) == 0 ? -100 : 100;
         Vector3 spawnPosition = new Vector3(xPosition, 0, zPosition + zOffset);
 
         // Instantiate the person prefab
@@ -54,7 +54,7 @@ class PersonMovement : MonoBehaviour
     public void Initialize(float moveDirection)
     {
         // Randomize speed
-        speed = Random.Range(5.0f, 35.0f); // Adjust min and max speed as needed
+        speed = Random.Range(5.0f, 40.0f); // Adjust min and max speed as needed
         // Apply the movement direction (left or right)
         GetComponent<Rigidbody>().velocity = new Vector3(moveDirection * speed, 0, 0);
     }
@@ -62,7 +62,7 @@ class PersonMovement : MonoBehaviour
     void Update()
     {
         // Check if the person has reached the edge and destroy if true
-        if (Mathf.Abs(transform.position.x) > 150)
+        if (Mathf.Abs(transform.position.x) > 120)
         {
             Destroy(gameObject);
         }
