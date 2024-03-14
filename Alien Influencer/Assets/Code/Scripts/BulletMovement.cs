@@ -5,6 +5,7 @@ public class BulletMovement : MonoBehaviour
     public Transform target; // The target (UFO) the bullet will aim at initially
     public float speed = 5f; // Speed of the bullet
     private Vector3 direction; // The initial direction towards the UFO
+    public float lifetime = 5f;
 
     private void Start()
     {
@@ -22,6 +23,9 @@ public class BulletMovement : MonoBehaviour
             transform.Rotate(90, 0, 0);
             transform.LookAt(target.position);
         }
+
+        // Destroy the bullet after 3 seconds
+        Destroy(gameObject, lifetime);
 
         // Optionally, you can comment out the dynamic targeting logic below
         /*
