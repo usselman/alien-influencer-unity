@@ -39,6 +39,7 @@ public class UfoMovement : MonoBehaviour
     {
         // Handle left-right movement with momentum
         float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
         Vector3 force = new Vector3(horizontalInput, 0, 0) * speed;
         rb.AddForce(force);
 
@@ -46,7 +47,7 @@ public class UfoMovement : MonoBehaviour
         rb.position = new Vector3(Mathf.Clamp(rb.position.x, minXPosition, maxXPosition), rb.position.y, rb.position.z);
 
         // Tilt the UFO based on movement direction
-        Vector3 tilt = new Vector3(0, 0, -horizontalInput * tiltAmount);
+        Vector3 tilt = new Vector3(verticalInput * tiltAmount, 0, -horizontalInput * tiltAmount);
         rb.rotation = Quaternion.Euler(tilt);
     }
 }
