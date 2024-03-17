@@ -6,6 +6,7 @@ public class BulletMovement : MonoBehaviour
     public float speed = 5f; // Speed of the bullet
     private Vector3 direction; // The initial direction towards the UFO
     public float lifetime = 5f;
+    public ParticleSystem BulletDisappearEffect;
 
     private void Start()
     {
@@ -24,8 +25,9 @@ public class BulletMovement : MonoBehaviour
             transform.LookAt(target.position);
         }
 
-        // Destroy the bullet after 3 seconds
-        Destroy(gameObject, lifetime);
+        ParticleSystem disappearEffect = Instantiate(BulletDisappearEffect, transform.position, Quaternion.identity);
+        disappearEffect.Play();
+        DestroyBullet();
 
         // Optionally, you can comment out the dynamic targeting logic below
         /*
@@ -40,6 +42,11 @@ public class BulletMovement : MonoBehaviour
     {
         // Move the bullet in the stored initial direction
         transform.position += direction * speed * Time.deltaTime;
+    }
+
+    void DestroyBullet()
+    {
+        Destroy(gameObject, lifetime);
     }
 
     // This method was used for dynamic targeting, now commented out
