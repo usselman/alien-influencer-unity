@@ -36,7 +36,7 @@ public class PeopleWalker : MonoBehaviour
         // Randomize the spawn position within the bounds of the ground plane
         float xPosition = Random.Range(minX, maxX);
         float zPosition = Random.Range(minZ, maxZ);
-        Vector3 spawnPosition = new Vector3(xPosition, 0, zPosition);
+        Vector3 spawnPosition = new Vector3(xPosition, 1, zPosition);
 
         // Instantiate the person prefab
         GameObject person = Instantiate(personPrefab, spawnPosition, Quaternion.identity);
