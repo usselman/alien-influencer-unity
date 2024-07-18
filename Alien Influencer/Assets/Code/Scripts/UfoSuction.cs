@@ -9,6 +9,7 @@ public class UfoSuction : MonoBehaviour
     public GameObject suctionEffectPrefab; // Reference to the particle effect prefab
     public GameObject suctionEffectTrailPrefab; // Reference to the suction trail prefab
     public ParticleSystem suctionConeEffect;
+    public GameObject pikminSpherePrefab; // Reference to the PikminSphere prefab
 
     private void Update()
     {
@@ -19,7 +20,6 @@ public class UfoSuction : MonoBehaviour
             {
                 suctionConeEffect.Play();
             }
-
         }
         else
         {
@@ -53,11 +53,19 @@ public class UfoSuction : MonoBehaviour
                 if (horizontalDistance <= 2.5f && verticalDistance <= 1.5f)
                 {
                     InstantiateSuctionParticleEffect(hitCollider.transform.position); // Instantiate the particle effect
+                    SpawnPikminSphere();
                     Destroy(hitCollider.gameObject);
                     ScoreManager.instance.AddScore(scorePoint); // Increase the score
                 }
             }
         }
+    }
+
+    private void SpawnPikminSphere()
+    {
+        // Spawn a PikminSphere directly under the UFO
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+        Instantiate(pikminSpherePrefab, spawnPosition, Quaternion.identity);
     }
 
     private float CalculateSuctionEffect(float horizontalDistance, float verticalDistance)

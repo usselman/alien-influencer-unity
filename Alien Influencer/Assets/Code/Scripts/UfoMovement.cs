@@ -4,47 +4,45 @@ using UnityEngine;
 public class UfoMovement : MonoBehaviour
 {
     public float speed = 20.0f; // Movement speed of the UFO
-    public float laneChangeSpeed = 25.0f; // Speed of changing lanes
     public float tiltAmount = 10.0f; // Maximum tilt angle
-    private float targetZPosition = 0; // Target Z position for lane switching
+    public Transform groundPlane; // Reference to the 'Ground' plane
     private Rigidbody rb; // Reference to the UFO's Rigidbody
+    private float constantHeight = 10f; // Constant height for the UFO
 
-    // Define bounds for the UFO's x position
-    private float minXPosition = -80f;
-    private float maxXPosition = 80f;
+    // Define bounds for the UFO's position
+    private float minXPosition;
+    private float maxXPosition;
+    private float minZPosition;
+    private float maxZPosition;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-    }
 
-    private void Update()
-    {
-        // Handle up-down keys for changing lanes
-        if (Input.GetKeyDown(KeyCode.UpArrow) && targetZPosition < 25)
-        {
-            targetZPosition = 25; // Set target to the background lane
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && targetZPosition > 0)
-        {
-            targetZPosition = 0; // Set target to the foreground lane
-        }
-
-        float step = laneChangeSpeed * Time.deltaTime;
-        float newZ = Mathf.MoveTowards(transform.position.z, targetZPosition, step);
-        transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
+        // Get the bounds of the ground plane
+        Renderer groundRenderer = groundPlane.GetComponent<Renderer>();
+        minXPosition = groundRenderer.bounds.min.x;
+        maxXPosition = groundRenderer.bounds.max.x;
+        minZPosition = groundRenderer.bounds.min.z;
+        maxZPosition = groundRenderer.bounds.max.z;
     }
 
     private void FixedUpdate()
     {
-        // Handle left-right movement with momentum
+        // Handle movement with momentum
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        Vector3 force = new Vector3(horizontalInput, 0, 0) * speed;
-        rb.AddForce(force);
+
+        // Movement vector
+        Vector3 movement = new Vector3(horizontalInput, 0, verticalInput) * speed;
+        rb.AddForce(movement);
 
         // Clamp the UFO's position within bounds
-        rb.position = new Vector3(Mathf.Clamp(rb.position.x, minXPosition, maxXPosition), rb.position.y, rb.position.z);
+        rb.position = new Vector3(
+            Mathf.Clamp(rb.position.x, minXPosition, maxXPosition),
+            constantHeight,
+            Mathf.Clamp(rb.position.z, minZPosition, maxZPosition)
+        );
 
         // Tilt the UFO based on movement direction
         Vector3 tilt = new Vector3(verticalInput * tiltAmount, 0, -horizontalInput * tiltAmount);
