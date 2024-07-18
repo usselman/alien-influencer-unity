@@ -227,7 +227,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 12, z: 0}
-  m_LocalScale: {x: 4, y: 1, z: 2}
+  m_LocalScale: {x: 6, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1350139203}
@@ -249,8 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ca0a37b663a45afbb3e21ab05d12fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  tiltAmount: 30
+  speed: 25
+  tiltAmount: 42
   groundPlane: {fileID: 1439486534}
 --- !u!114 &93865858
 MonoBehaviour:
@@ -264,8 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393217a412d5843ff9a51fb5b184e674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suctionRadius: 12
-  suctionPower: 75
+  suctionRadius: 15
+  suctionPower: 50
   scorePoint: 10
   personLayer:
     serializedVersion: 2
@@ -1746,13 +1746,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,7 +1767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 93865856}
   smoothSpeed: 0.125
-  offset: {x: 0, y: 5, z: -30}
+  offset: {x: 0, y: 15, z: -30}
 --- !u!1001 &1193699315
 PrefabInstance:
   m_ObjectHideFlags: 0
