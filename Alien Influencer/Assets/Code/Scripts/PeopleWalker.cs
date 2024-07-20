@@ -4,7 +4,6 @@ public class PeopleWalker : MonoBehaviour
 {
     public GameObject personPrefab; // Assign the 3D Cube prefab
     public TerrainGenerator terrainGenerator; // Reference to the TerrainGenerator
-
     public int maxPeople = 500; // Maximum number of people to spawn
     private Terrain terrain;
     private Vector3 terrainCenter;
