@@ -2,13 +2,25 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public Terrain terrain;
-    public float scale = 0.1f;
-    public float heightMultiplier = 5f;
+    public GameObject terrainPrefab; // Assign the Terrain prefab
+    public float scale = 20f; // Larger scale for smoother hills
+    public float heightMultiplier = 2f; // Height multiplier for the terrain elevation
+    private GameObject terrainInstance; // Instance of the Terrain
+    private Terrain terrain;
 
     void Start()
     {
-        GenerateTerrain();
+        if (terrainPrefab != null)
+        {
+            terrainInstance = Instantiate(terrainPrefab, Vector3.zero, Quaternion.identity);
+            terrain = terrainInstance.GetComponent<Terrain>();
+            GenerateTerrain();
+        }
+    }
+
+    public Terrain GetTerrain()
+    {
+        return terrain;
     }
 
     void GenerateTerrain()

@@ -3,40 +3,54 @@ using UnityEngine;
 public class PeopleWalker : MonoBehaviour
 {
     public GameObject personPrefab; // Assign the 3D Cube prefab
-    public float spawnInterval = 0.1f; // Time between each spawn
-    private float timer;
-    public Transform groundPlane; // Reference to the 'Ground' plane
+    public TerrainGenerator terrainGenerator; // Reference to the TerrainGenerator
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        timer = spawnInterval;
-    }
+    public int maxPeople = 500; // Maximum number of people to spawn
+    private Terrain terrain;
+    private Vector3 terrainCenter;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+
+        // Get the instantiated terrain
+        terrain = terrainGenerator.GetTerrain();
+
+        if (terrain != null)
+        {
+            // Get the bounds of the terrain
+            TerrainData terrainData = terrain.terrainData;
+            float minXPosition = terrain.transform.position.x;
+            float maxXPosition = terrain.transform.position.x + terrainData.size.x;
+            float minZPosition = terrain.transform.position.z;
+            float maxZPosition = terrain.transform.position.z + terrainData.size.z;
+            terrainCenter = new Vector3((minXPosition + maxXPosition) / 2, 0, (minZPosition + maxZPosition) / 2);
+        }
+        else
+        {
+            Debug.LogError("Terrain not found!");
+        }
+
+        for (int i = 0; i < maxPeople; i++)
         {
             SpawnPerson();
-            timer = spawnInterval;
         }
     }
 
     void SpawnPerson()
     {
-        // Get the bounds of the ground plane
-        Renderer groundRenderer = groundPlane.GetComponent<Renderer>();
-        float minX = groundRenderer.bounds.min.x;
-        float maxX = groundRenderer.bounds.max.x;
-        float minZ = groundRenderer.bounds.min.z;
-        float maxZ = groundRenderer.bounds.max.z;
+        if (terrain == null)
+            return;
 
-        // Randomize the spawn position within the bounds of the ground plane
-        float xPosition = Random.Range(minX, maxX);
-        float zPosition = Random.Range(minZ, maxZ);
-        Vector3 spawnPosition = new Vector3(xPosition, 1, zPosition);
+        // Get the terrain size
+        TerrainData terrainData = terrain.terrainData;
+        Vector3 terrainSize = terrainData.size;
+
+        // Randomize the spawn position within the bounds of the terrain, centered around the terrain center
+        float xPosition = Random.Range(terrainCenter.x - terrainSize.x / 2, terrainCenter.x + terrainSize.x / 2);
+        float zPosition = Random.Range(terrainCenter.z - terrainSize.z / 2, terrainCenter.z + terrainSize.z / 2);
+        float yPosition = terrain.SampleHeight(new Vector3(xPosition, 0, zPosition)) + terrain.transform.position.y;
+
+        Vector3 spawnPosition = new Vector3(xPosition, yPosition, zPosition);
 
         // Instantiate the person prefab
         GameObject person = Instantiate(personPrefab, spawnPosition, Quaternion.identity);
@@ -45,7 +59,7 @@ public class PeopleWalker : MonoBehaviour
         person.AddComponent<PersonMovement>().Initialize(spawnPosition);
 
         // Assign random scale to the person
-        float scale = Random.Range(0.5f, 1f);
+        float scale = Random.Range(0.25f, 1f);
         person.transform.localScale = new Vector3(scale, scale, scale);
     }
 }
