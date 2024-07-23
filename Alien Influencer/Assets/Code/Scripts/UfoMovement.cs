@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class UfoMovement : MonoBehaviour
@@ -19,28 +20,27 @@ public class UfoMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        StartCoroutine(InitializeUfoPosition());
+    }
 
-        // Get the instantiated terrain
-        terrain = terrainGenerator.GetTerrain();
-
-        if (terrain != null)
+    private IEnumerator InitializeUfoPosition()
+    {
+        while ((terrain = terrainGenerator.GetTerrain()) == null)
         {
-            // Get the bounds of the terrain
-            TerrainData terrainData = terrain.terrainData;
-            minXPosition = terrain.transform.position.x;
-            maxXPosition = terrain.transform.position.x + terrainData.size.x;
-            minZPosition = terrain.transform.position.z;
-            maxZPosition = terrain.transform.position.z + terrainData.size.z;
-            terrainCenter = new Vector3((minXPosition + maxXPosition) / 2, 0, (minZPosition + maxZPosition) / 2);
+            yield return null; // Wait until the terrain is generated
+        }
 
-            // Set the UFO initial position to the center of the terrain
-            float terrainHeight = terrain.SampleHeight(terrainCenter) + terrain.transform.position.y;
-            rb.position = new Vector3(terrainCenter.x, terrainHeight + constantHeight, terrainCenter.z);
-        }
-        else
-        {
-            Debug.LogError("Terrain not found!");
-        }
+        // Get the bounds of the terrain
+        TerrainData terrainData = terrain.terrainData;
+        minXPosition = terrain.transform.position.x;
+        maxXPosition = terrain.transform.position.x + terrainData.size.x;
+        minZPosition = terrain.transform.position.z;
+        maxZPosition = terrain.transform.position.z + terrainData.size.z;
+        terrainCenter = new Vector3((minXPosition + maxXPosition) / 2, 0, (minZPosition + maxZPosition) / 2);
+
+        // Set the UFO initial position to the center of the terrain
+        float terrainHeight = terrain.SampleHeight(terrainCenter) + terrain.transform.position.y;
+        rb.position = new Vector3(terrainCenter.x, terrainHeight + constantHeight, terrainCenter.z);
     }
 
     private void FixedUpdate()

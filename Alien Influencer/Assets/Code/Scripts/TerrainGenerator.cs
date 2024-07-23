@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class TerrainGenerator : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class TerrainGenerator : MonoBehaviour
     public float heightMultiplier = 2f; // Height multiplier for the terrain elevation
     private GameObject terrainInstance; // Instance of the Terrain
     private Terrain terrain;
+    private bool isTerrainGenerated = false;
 
     void Start()
     {
@@ -20,7 +22,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public Terrain GetTerrain()
     {
-        return terrain;
+        return isTerrainGenerated ? terrain : null;
     }
 
     void GenerateTerrain()
@@ -42,5 +44,6 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         terrainData.SetHeights(0, 0, heights);
+        isTerrainGenerated = true;
     }
 }

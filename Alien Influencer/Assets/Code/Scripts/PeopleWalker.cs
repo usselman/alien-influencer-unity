@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PeopleWalker : MonoBehaviour
 {
@@ -10,24 +11,23 @@ public class PeopleWalker : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(InitializePeopleWalker());
+    }
 
-        // Get the instantiated terrain
-        terrain = terrainGenerator.GetTerrain();
+    private IEnumerator InitializePeopleWalker()
+    {
+        while ((terrain = terrainGenerator.GetTerrain()) == null)
+        {
+            yield return null; // Wait until the terrain is generated
+        }
 
-        if (terrain != null)
-        {
-            // Get the bounds of the terrain
-            TerrainData terrainData = terrain.terrainData;
-            float minXPosition = terrain.transform.position.x;
-            float maxXPosition = terrain.transform.position.x + terrainData.size.x;
-            float minZPosition = terrain.transform.position.z;
-            float maxZPosition = terrain.transform.position.z + terrainData.size.z;
-            terrainCenter = new Vector3((minXPosition + maxXPosition) / 2, 0, (minZPosition + maxZPosition) / 2);
-        }
-        else
-        {
-            Debug.LogError("Terrain not found!");
-        }
+        // Get the bounds of the terrain
+        TerrainData terrainData = terrain.terrainData;
+        float minXPosition = terrain.transform.position.x;
+        float maxXPosition = terrain.transform.position.x + terrainData.size.x;
+        float minZPosition = terrain.transform.position.z;
+        float maxZPosition = terrain.transform.position.z + terrainData.size.z;
+        terrainCenter = new Vector3((minXPosition + maxXPosition) / 2, 0, (minZPosition + maxZPosition) / 2);
 
         for (int i = 0; i < maxPeople; i++)
         {

@@ -948,7 +948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 93865856}
   smoothSpeed: 0.5
-  offset: {x: 0, y: -10, z: -20}
+  offset: {x: 0, y: 8, z: -20}
 --- !u!1 &1350139202
 GameObject:
   m_ObjectHideFlags: 0
@@ -6262,7 +6262,7 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 1998818381}
   - {fileID: 656730846}
+  - {fileID: 1796626837}
   - {fileID: 1439486534}
   - {fileID: 93865856}
   - {fileID: 1485522683}
-  - {fileID: 1796626837}
