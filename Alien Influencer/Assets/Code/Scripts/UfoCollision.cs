@@ -19,6 +19,7 @@ public class UfoCollision : MonoBehaviour
             }
 
             DestroyUfo(); // Call a method to handle UFO destruction
+            GameManager.instance.GameOver();
         }
     }
 

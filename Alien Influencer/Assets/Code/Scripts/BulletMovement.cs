@@ -13,7 +13,11 @@ public class BulletMovement : MonoBehaviour
         if (target == null)
         {
             // Find the UFO object by tag or name if not set in the inspector
-            target = GameObject.FindGameObjectWithTag("UFO").transform;
+            GameObject targetObject = GameObject.FindGameObjectWithTag("UFO");
+            if (targetObject != null)
+            {
+                target = targetObject.transform;
+            }
         }
 
         // Calculate and store the initial direction towards the target
@@ -25,41 +29,27 @@ public class BulletMovement : MonoBehaviour
             transform.LookAt(target.position);
         }
 
-        ParticleSystem disappearEffect = Instantiate(BulletDisappearEffect, transform.position, Quaternion.identity);
-        disappearEffect.Play();
-        DestroyBullet();
-
-        // Optionally, you can comment out the dynamic targeting logic below
-        /*
-        if(target != null)
+        // Optionally instantiate the disappear effect if needed
+        if (BulletDisappearEffect != null)
         {
-            MoveTowardsTarget();
+            Instantiate(BulletDisappearEffect, transform.position, Quaternion.identity);
         }
-        */
+
+        // Destroy the bullet after its lifetime
+        DestroyBullet();
     }
 
     void Update()
     {
-        // Move the bullet in the stored initial direction
-        transform.position += direction * speed * Time.deltaTime;
+        if (target != null)
+        {
+            // Move the bullet in the stored initial direction
+            transform.position += direction * speed * Time.deltaTime;
+        }
     }
 
     void DestroyBullet()
     {
         Destroy(gameObject, lifetime);
     }
-
-    // This method was used for dynamic targeting, now commented out
-    /*
-    void MoveTowardsTarget()
-    {
-        // Calculate the direction vector from the bullet to the target
-        Vector3 direction = (target.position - transform.position).normalized;
-        // Move the bullet in the direction of the target
-        transform.position += direction * speed * Time.deltaTime;
-
-        // Make the bullet face the direction it's moving
-        transform.LookAt(target);
-    }
-    */
 }

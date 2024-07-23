@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI; // Required for manipulating UI elements
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance; // Singleton pattern to easily access the instance
-    public Text scoreText; // The UI Text component that displays the score
+    public TMP_Text scoreText; // The UI Text component that displays the score
     private int score = 0; // The current score
 
     private void Awake()
@@ -24,5 +25,10 @@ public class ScoreManager : MonoBehaviour
     {
         score += points; // Increase the score
         scoreText.text = "Score: " + score; // Update the UI
+
+        if (score >= 100)
+        {
+            GameManager.instance.WinGame();
+        }
     }
 }

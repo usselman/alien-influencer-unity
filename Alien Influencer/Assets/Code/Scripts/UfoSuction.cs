@@ -50,7 +50,7 @@ public class UfoSuction : MonoBehaviour
                     Instantiate(suctionEffectTrailPrefab, hitCollider.transform.position, Quaternion.identity, hitCollider.transform);
                 }
 
-                if (horizontalDistance <= 2.5f && verticalDistance <= 1.5f)
+                if (horizontalDistance <= 5f && verticalDistance <= 1.5f)
                 {
                     InstantiateSuctionParticleEffect(hitCollider.transform.position); // Instantiate the particle effect
                     SpawnPikminSphere();
