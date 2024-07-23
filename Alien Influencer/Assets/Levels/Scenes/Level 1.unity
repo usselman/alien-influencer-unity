@@ -14,31 +14,31 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_Fog: 1
+  m_FogColor: {r: 0.8666667, g: 0.83237743, b: 0.63529414, a: 1}
+  m_FogMode: 2
+  m_FogDensity: 0.0025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.25
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 0.637994, g: 0.6733179, b: 0.764151, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d963f39822d13e944a92ac383f397f46, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
-  m_DefaultReflectionResolution: 128
+  m_DefaultReflectionResolution: 256
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4701435, g: 0.6004827, b: 0.67248595, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -642,8 +642,8 @@ MonoBehaviour:
   personPrefab: {fileID: 2023676443861224507, guid: 4674f574617b44b399a116f1bf3276f2, type: 3}
   enemyTowerPrefab: {fileID: 5004744345713282328, guid: 541867e907bd44f1c8ac3a43ec20b9aa, type: 3}
   terrainGenerator: {fileID: 1796626836}
-  maxPeople: 500
-  maxTowers: 50
+  maxPeople: 2500
+  maxTowers: 500
   minTowerDistance: 50
 --- !u!1 &705507993
 GameObject:
@@ -673,8 +673,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.8773585, g: 0.84672374, b: 0.3186632, a: 1}
-  m_Intensity: 0.25
+  m_Color: {r: 0.8191527, g: 0.8807904, b: 0.9811321, a: 1}
+  m_Intensity: 0.75
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
@@ -881,7 +881,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -930,13 +930,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalRotation: {x: 0.13917309, y: 0, z: 0, w: 0.9902681}
   m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 16, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 93865856}
   smoothSpeed: 0.5
-  offset: {x: 0, y: 8, z: -20}
+  offset: {x: 0, y: 8, z: -24}
 --- !u!1 &1350139202
 GameObject:
   m_ObjectHideFlags: 0
@@ -6018,8 +6018,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainPrefab: {fileID: 5746868724585551673, guid: 3d148b840cbcc4629a1d413934e925bc, type: 3}
-  scale: 1
-  heightMultiplier: 0.25
+  scale: 0.5
+  heightMultiplier: 5
 --- !u!4 &1796626837
 Transform:
   m_ObjectHideFlags: 0
