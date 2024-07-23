@@ -39,18 +39,20 @@ public class UfoSuction : MonoBehaviour
             if (rb != null)
             {
                 Vector3 directionToUfo = (transform.position - hitCollider.transform.position).normalized;
-                float verticalDistance = Mathf.Abs(transform.position.y - hitCollider.transform.position.y);
-                float horizontalDistance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hitCollider.transform.position.x, hitCollider.transform.position.z));
-                float suctionEffect = CalculateSuctionEffect(horizontalDistance, verticalDistance);
+                float distanceToUfo = Vector3.Distance(transform.position, hitCollider.transform.position);
 
-                rb.AddForce(directionToUfo * suctionPower * suctionEffect, ForceMode.Acceleration);
+                // Calculate the speed based on the distance to the UFO (closer = faster)
+                float speed = suctionPower * (1 - Mathf.Clamp01(distanceToUfo / suctionRadius));
+
+                // Set the velocity directly towards the bottom center of the UFO
+                rb.velocity = directionToUfo * speed;
 
                 if (hitCollider.transform.Find(suctionEffectTrailPrefab.name + "(Clone)") == null) // Check if the trail is not already instantiated for this object
                 {
                     Instantiate(suctionEffectTrailPrefab, hitCollider.transform.position, Quaternion.identity, hitCollider.transform);
                 }
 
-                if (horizontalDistance <= 5f && verticalDistance <= 1.5f)
+                if (distanceToUfo <= 5f)
                 {
                     InstantiateSuctionParticleEffect(hitCollider.transform.position); // Instantiate the particle effect
                     SpawnPikminSphere();
@@ -66,13 +68,6 @@ public class UfoSuction : MonoBehaviour
         // Spawn a PikminSphere directly under the UFO
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         Instantiate(pikminSpherePrefab, spawnPosition, Quaternion.identity);
-    }
-
-    private float CalculateSuctionEffect(float horizontalDistance, float verticalDistance)
-    {
-        float horizontalEffect = 1 - Mathf.Pow(horizontalDistance / suctionRadius, 2);
-        float verticalEffect = 1 - Mathf.Pow(verticalDistance / suctionRadius, 2);
-        return Mathf.Clamp(horizontalEffect * verticalEffect, 0, 1);
     }
 
     private void InstantiateSuctionParticleEffect(Vector3 position)
