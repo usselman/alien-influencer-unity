@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7927588030444082814}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10.4, z: 0}
+  m_LocalPosition: {x: 0.5359543, y: 10.935954, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129,7 +129,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Time: 0.5
-  m_PreviewTimeScale: 0
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -234,5 +234,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 10
-  lifetime: 5
+  lifetime: 10
   BulletDisappearEffect: {fileID: 8050547613883580658, guid: 66cf41acc5a8e472bba2cd285f1ec75a, type: 3}

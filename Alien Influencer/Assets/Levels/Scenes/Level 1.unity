@@ -590,7 +590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 656730846}
-  - component: {fileID: 656730847}
+  - component: {fileID: 656730849}
   - component: {fileID: 656730848}
   m_Layer: 0
   m_Name: Game Manager
@@ -608,27 +608,12 @@ Transform:
   m_GameObject: {fileID: 656730845}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.048778452, y: -13.128432, z: 26.897146}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &656730847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656730845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b86005026ccc471ba4d4c134efee2ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  personPrefab: {fileID: 2023676443861224507, guid: 4674f574617b44b399a116f1bf3276f2, type: 3}
-  terrainGenerator: {fileID: 1796626836}
-  maxPeople: 1000
 --- !u!114 &656730848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +627,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 353130426}
+--- !u!114 &656730849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656730845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b86005026ccc471ba4d4c134efee2ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personPrefab: {fileID: 2023676443861224507, guid: 4674f574617b44b399a116f1bf3276f2, type: 3}
+  enemyTowerPrefab: {fileID: 5004744345713282328, guid: 541867e907bd44f1c8ac3a43ec20b9aa, type: 3}
+  terrainGenerator: {fileID: 1796626836}
+  maxPeople: 500
+  maxTowers: 50
+  minTowerDistance: 50
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
