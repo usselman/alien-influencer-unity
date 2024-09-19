@@ -1,118 +1,62 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class PikminSphere : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private Transform ufoTarget;
-    private bool isReturning = false;
-    public float followSpeed = 5f;
-    public float smoothTime = 0.3f;
-    private Vector3 velocity = Vector3.zero;
-
-    /*
-    !! Need to implement NavMeshAgents for the Pikmin to follow the UFO
-    !! And for the followers to go where they are told to 
-    */
-
-    public void Initialize()
+    Transform ufoTrans;
+    NavMeshAgent agent;
+    Vector3 groundPosition;
+    enum PikmanState
     {
-        GameObject ufoObject = GameObject.FindWithTag("UFO");
-        if (ufoObject != null)
+        Idle,
+        StartFollowing,
+        Following
+    }
+    PikmanState state = PikmanState.Idle;
+    void Start()
+    {
+        ufoTrans = GameObject.FindWithTag("UFO").transform;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Terrain>() != null)
         {
-            ufoTarget = ufoObject.transform;
+            state = PikmanState.StartFollowing;
         }
-
-        //agent = GetComponent<NavMeshAgent>();
-        FollowUFO();
     }
 
-    private void FollowUFO()
-    {
-        if (ufoTarget == null) return;
-
-        //Vector3 groundPosition = new Vector3(ufoTarget.position.x, transform.position.y, ufoTarget.position.z);
-        //agent.SetDestination(groundPosition);
-
-        Vector3 targetPosition = new Vector3(ufoTarget.position.x, transform.position.y, ufoTarget.position.z);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, followSpeed);
-    }
-
-    public void SendToLocation(Vector3 targetPosition)
-    {
-        isReturning = false;
-        /*
-        ! Need to implement setting a destination to a target location
-        */
-        //agent.SetDestination(targetPosition);
-    }
-
+    // Update is called once per frame
     void Update()
     {
-        if (!isReturning)
+        switch (state)
         {
-            FollowUFO();
-        }
-
-        if (isReturning && Vector3.Distance(transform.position, new Vector3(ufoTarget.position.x, transform.position.y, ufoTarget.position.z)) < 1f)
-        {
-            FollowUFO();
-            isReturning = false;
+            case PikmanState.Idle:
+                break;
+            case PikmanState.StartFollowing:
+                StartFollow();
+                break;
+            case PikmanState.Following:
+                FollowUFO();
+                break;
         }
     }
-
-    /*
-    ! Need to implement setting a destination to a target location
-    */
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("TargetLocation"))
-    //     {
-    //         isReturning = true;
-    //         agent.SetDestination(new Vector3(ufoTarget.position.x, transform.position.y, ufoTarget.position.z));
-    //     }
-    // }
+    void StartFollow()
+    {
+        if (agent == null)
+        {
+            agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent == null)
+            {
+                agent = gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>();
+            }
+        }
+        state = PikmanState.Following;
+    }
+    void FollowUFO()
+    {
+        groundPosition = new Vector3(ufoTrans.position.x, transform.position.y, ufoTrans.position.z);
+        agent.speed = Vector3.Distance(transform.position, groundPosition);
+        agent.SetDestination(groundPosition);
+    }
 }
-
-
-
-/*
-* Methods for having a pikmin follower chase after other people and convert them into pikmin
-* Probably deprecated in favor of having the pikmin follow you as a band and then only act when sent to do something
-*/
-
-// private void MoveTowardsTarget()
-// {
-//     Vector3 direction = (target.position - transform.position).normalized;
-//     transform.position += direction * speed * Time.deltaTime;
-
-//     if (Vector3.Distance(transform.position, target.position) < 0.5f)
-//     {
-//         ConvertToPikmin(target.gameObject);
-//         FindNewTarget();
-//     }
-// }
-
-// private void ConvertToPikmin(GameObject person)
-// {
-//     Vector3 position = person.transform.position;
-//     Destroy(person);
-//     Instantiate(gameObject, position, Quaternion.identity);
-// }
-
-// private void FindNewTarget()
-// {
-//     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 100f, personLayer);
-//     float closestDistance = Mathf.Infinity;
-
-//     foreach (var hitCollider in hitColliders)
-//     {
-//         float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-//         if (distance < closestDistance)
-//         {
-//             closestDistance = distance;
-//             target = hitCollider.transform;
-//         }
-//     }
-// }
