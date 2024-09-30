@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    #region Variables
     public enum BuildingState
     {
         Untouched,
@@ -21,7 +19,10 @@ public class Building : MonoBehaviour
     public Animator damageBarAnimator;
     public ProgressBarPro damageProgressBar;
 
-    public void Start()
+    #endregion
+    #region Unity Methods
+
+    void Start()
     {
         buildingStanding.SetActive(true);
         buildingDestroyed.SetActive(false);
@@ -50,15 +51,11 @@ public class Building : MonoBehaviour
                 IsDestroyed();
                 break;
         }
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            StartDamaged();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            AddDamage(10);
-        }
     }
+
+    #endregion
+    #region State Functions
+
     void Untouched()
     {
 
@@ -92,12 +89,9 @@ public class Building : MonoBehaviour
     void IsDestroyed()
     {
     }
-    IEnumerator StallDisableStandingBuildingObjects()
-    {
-        yield return new WaitForSeconds(1f);
-        damagedParticles.gameObject.SetActive(false);
-        damageBarAnimator.gameObject.SetActive(false);
-    }
+
+    #endregion
+    #region Public Methods
 
     public void AddDamage(int amount)
     {
@@ -116,4 +110,17 @@ public class Building : MonoBehaviour
             StartDestroyed();
         }
     }
+
+    #endregion
+    #region Utility Functions
+
+    IEnumerator StallDisableStandingBuildingObjects()
+    {
+        yield return new WaitForSeconds(1f);
+        damagedParticles.gameObject.SetActive(false);
+        damageBarAnimator.gameObject.SetActive(false);
+    }
+
+    #endregion
+
 }

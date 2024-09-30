@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class MinionManager : Singleton<MinionManager>
 {
     public GameObject SelectedBuilding;
-    public static event System.Action OnNewBuildingSelected;
+    public static event System.Action OnNewBuildingSelected; //Event for all minions to subscribe to
     public void NewBuildingSelection(GameObject newSelectionBuilding)
     {
         SelectedBuilding = newSelectionBuilding;

@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Minion : MonoBehaviour
 {
+
+    #region Variables
+
     public enum MinionState
     {
         StartIdle,
@@ -29,6 +29,10 @@ public class Minion : MonoBehaviour
     public float walkingSpeed = 2.0f;
     Vector3 destination;
     Transform ufoTrans;
+
+    #endregion
+    #region Unity Methods
+
     void Start()
     {
         ufoTrans = GameObject.FindWithTag("UFO").transform;
@@ -71,6 +75,9 @@ public class Minion : MonoBehaviour
         }
     }
 
+    #endregion
+    #region State Functions
+
     void StartIdle()
     {
         animator.SetTrigger("StartIdle");
@@ -78,7 +85,7 @@ public class Minion : MonoBehaviour
     }
     void Idle()
     {
-        //Idle
+
     }
     public void MoveToBuilding()
     {
@@ -104,7 +111,6 @@ public class Minion : MonoBehaviour
     }
     void AttackingBuilding()
     {
-
         switch (attackState)
         {
             case AttackState.StartAttack:
@@ -132,6 +138,10 @@ public class Minion : MonoBehaviour
             state = MinionState.StartIdle;
         }
     }
+
+    #endregion
+    #region Utility Functions
+
     IEnumerator StallAttack()
     {
         if (!MinionManager.Instance.CanAttackBuilding())
@@ -144,4 +154,7 @@ public class Minion : MonoBehaviour
         yield return new WaitForSeconds(1.3f);
         attackState = AttackState.StartAttack;
     }
+
+    #endregion
+
 }

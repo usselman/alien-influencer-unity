@@ -1,9 +1,6 @@
-using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-    private const string DestroyInstance = "Destroying extra Instance of {0}";
-
     private static T _instance = null;
     private static bool _isQuiting = false;
 
@@ -33,9 +30,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
     }
 
-    public static bool InstanceIsNull
-    { get { return _instance == null; } }
-
     private void Awake()
     {
         if (_instance == null)
@@ -44,7 +38,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
         if (_instance != null && _instance != this)
         {
-            Debug.LogWarningFormat(DestroyInstance, typeof(T).Name);
+            Debug.LogWarningFormat("Destroying extra Instance of {0}", typeof(T).Name);
             Destroy(this.gameObject);
         }
     }

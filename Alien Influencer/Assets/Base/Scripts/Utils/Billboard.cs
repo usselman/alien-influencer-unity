@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
@@ -15,6 +12,7 @@ public class Billboard : MonoBehaviour
 
     void FixedUpdate()
     {
+        //For world space UI that always faces camera, like building destruction progress bar
         transform.rotation = camTransform.rotation * originalRotation;
     }
 }
