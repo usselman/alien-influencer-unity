@@ -28,7 +28,7 @@ public class ScoreManager : MonoBehaviour
 
         if (score >= 100)
         {
-            GameManager.instance.WinGame();
+            GameManager.Instance.WinGame();
         }
     }
 }

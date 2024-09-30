@@ -2,29 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager instance;
 
     public GameObject startMenu;
     public GameObject gameOverMenu;
     public GameObject winMenu;
     public TMP_Text scoreText;
     private int score = 0;
-
-    private void Awake()
-    {
-
-        if (instance == null)
-        {
-            instance = this;
-
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
