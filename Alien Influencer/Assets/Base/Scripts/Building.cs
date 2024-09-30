@@ -86,7 +86,7 @@ public class Building : MonoBehaviour
         destroyedParticles.gameObject.SetActive(true);
         destroyedParticles.Play();
         StartCoroutine(StallDisableStandingBuildingObjects());
-
+        buildingDestroyed.SetActive(true);
         CurrentState = BuildingState.IsDestroyed;
     }
     void IsDestroyed()
@@ -101,6 +101,14 @@ public class Building : MonoBehaviour
 
     public void AddDamage(int amount)
     {
+        if(CurrentState == BuildingState.IsDestroyed)
+        {
+            return;
+        }
+        if(CurrentState == BuildingState.Untouched)
+        {
+            StartDamaged();
+        }
         currentDamage += amount;
         damageProgressBar.SetValue(currentDamage, maxDamage, false);
         if (currentDamage >= maxDamage)

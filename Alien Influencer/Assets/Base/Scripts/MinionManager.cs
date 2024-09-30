@@ -11,8 +11,17 @@ public class MinionManager : Singleton<MinionManager>
         SelectedBuilding = newSelectionBuilding;
         OnNewBuildingSelected?.Invoke();
     }
+    public bool CanAttackBuilding()
+    {
+        Building building = SelectedBuilding.transform.parent.GetComponent<Building>();
+        if(building == null)
+        {
+            return false;
+        }
+        return building.CurrentState != Building.BuildingState.IsDestroyed;
+    }
     public void AttackBuilding()
     {
-        SelectedBuilding.GetComponent<Building>()?.AddDamage(10);
+        SelectedBuilding.transform.parent.GetComponent<Building>()?.AddDamage(10);
     }
 }

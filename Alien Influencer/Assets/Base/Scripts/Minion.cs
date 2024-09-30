@@ -43,10 +43,6 @@ public class Minion : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            FinishedAttackingBuilding();
-        }
         switch (state)
         {
             case MinionState.StartIdle:
@@ -87,15 +83,16 @@ public class Minion : MonoBehaviour
     public void MoveToBuilding()
     {
         destination = MinionManager.Instance.SelectedBuilding.transform.position;
+        houseTrans = MinionManager.Instance.SelectedBuilding.transform;
         transform.LookAt(destination);
-        transform.position = Vector3.MoveTowards(transform.position, destination, walkingSpeed * Time.deltaTime);
         animator.SetTrigger("StartWalk");
         state = MinionState.MovingToBuilding;
     }
     void MovingToBuilding()
     {
         DistanceToTarget = Vector3.Distance(transform.position, destination);
-        if (Vector3.Distance(transform.position, destination) < 1.0f)
+        transform.position = Vector3.MoveTowards(transform.position, destination, walkingSpeed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, destination) < 8.0f)
         {
             state = MinionState.StartAttackingBuilding;
         }
@@ -107,7 +104,8 @@ public class Minion : MonoBehaviour
     }
     void AttackingBuilding()
     {
-        switch(attackState)
+
+        switch (attackState)
         {
             case AttackState.StartAttack:
                 StartCoroutine(StallAttack());
@@ -116,11 +114,6 @@ public class Minion : MonoBehaviour
             case AttackState.Attacking:
                 break;
         }
-    }
-    public void FinishedAttackingBuilding()
-    {
-        animator.SetTrigger("StartWalk");
-        state = MinionState.StartMovingToUFO;
     }
     void StartMovingToUFO()
     {
@@ -134,13 +127,18 @@ public class Minion : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, ufoGroundPosition, walkingSpeed * Time.deltaTime);
         transform.LookAt(ufoGroundPosition);
         DistanceToTarget = Vector3.Distance(transform.position, ufoGroundPosition);
-        if (Vector3.Distance(transform.position, ufoGroundPosition) < 1.0f)
+        if (Vector3.Distance(transform.position, ufoGroundPosition) < 3.0f)
         {
             state = MinionState.StartIdle;
         }
     }
     IEnumerator StallAttack()
     {
+        if (!MinionManager.Instance.CanAttackBuilding())
+        {
+            state = MinionState.StartMovingToUFO;
+            yield return 0;
+        }
         attackParticles.Play();
         MinionManager.Instance.AttackBuilding();
         yield return new WaitForSeconds(1.3f);
