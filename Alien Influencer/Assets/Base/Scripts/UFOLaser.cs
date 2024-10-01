@@ -42,7 +42,7 @@ public class UFOLaser : MonoBehaviour
             lineRenderer.startColor = missColor;
             lineRenderer.endColor = missColor;
         }
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.X))
         {
             BuildingHighlighter.Instance.SelectObject();
         }

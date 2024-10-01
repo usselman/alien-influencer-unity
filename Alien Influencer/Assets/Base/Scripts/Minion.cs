@@ -32,6 +32,7 @@ public class Minion : MonoBehaviour
     public float walkingSpeed = 2.0f;
     Vector3 destination;
     Transform ufoTrans;
+    int damage = 1;
 
     #endregion
     #region Unity Methods
@@ -88,7 +89,11 @@ public class Minion : MonoBehaviour
     }
     void Idle()
     {
-
+        Vector3 ufoGroundPosition = new Vector3(ufoTrans.position.x, transform.position.y, ufoTrans.position.z);
+        if (Vector3.Distance(transform.position, ufoGroundPosition) > 3.0f)
+        {
+            state = MinionState.StartMovingToUFO;
+        }
     }
     public void MoveToBuilding()
     {
@@ -101,7 +106,7 @@ public class Minion : MonoBehaviour
     void MovingToBuilding()
     {
         DistanceToTarget = Vector3.Distance(transform.position, destination);
-        transform.position = Vector3.MoveTowards(transform.position, destination, walkingSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, destination, walkingSpeed * DistanceToTarget * Time.deltaTime);
         if (Vector3.Distance(transform.position, destination) < 8.0f)
         {
             state = MinionState.StartAttackingBuilding;
@@ -133,10 +138,10 @@ public class Minion : MonoBehaviour
     void MovingToUFO()
     {
         Vector3 ufoGroundPosition = new Vector3(ufoTrans.position.x, transform.position.y, ufoTrans.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, ufoGroundPosition, walkingSpeed * Time.deltaTime);
-        transform.LookAt(ufoGroundPosition);
         DistanceToTarget = Vector3.Distance(transform.position, ufoGroundPosition);
-        if (Vector3.Distance(transform.position, ufoGroundPosition) < 3.0f)
+        transform.position = Vector3.MoveTowards(transform.position, ufoGroundPosition, walkingSpeed * DistanceToTarget * Time.deltaTime);
+        transform.LookAt(ufoGroundPosition);
+        if (Vector3.Distance(transform.position, ufoGroundPosition) < 1.0f)
         {
             state = MinionState.StartIdle;
         }
@@ -153,8 +158,8 @@ public class Minion : MonoBehaviour
             yield return 0;
         }
         attackParticles.Play();
-        MinionManager.Instance.AttackBuilding();
-        yield return new WaitForSeconds(1.3f);
+        MinionManager.Instance.AttackBuilding(damage);
+        yield return new WaitForSeconds(1);
         attackState = AttackState.StartAttack;
     }
 

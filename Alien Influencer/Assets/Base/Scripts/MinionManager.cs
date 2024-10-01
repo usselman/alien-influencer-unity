@@ -19,8 +19,8 @@ public class MinionManager : Singleton<MinionManager>
         }
         return building.CurrentState != Building.BuildingState.IsDestroyed;
     }
-    public void AttackBuilding()
+    public void AttackBuilding(int damage)
     {
-        SelectedBuilding.transform.parent.GetComponent<Building>()?.AddDamage(10);
+        SelectedBuilding.transform.parent.GetComponent<Building>()?.AddDamage(damage);
     }
 }

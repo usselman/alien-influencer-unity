@@ -9,7 +9,11 @@ public class GameManager : Singleton<GameManager>
     public GameObject gameOverMenu;
     public GameObject winMenu;
     public TMP_Text scoreText;
+    public TMP_Text timeLeftText;
+    private float timeLeft = 121f;
     private int score = 0;
+    int minutes = 0;
+    int seconds = 0;
 
     private void Start()
     {
@@ -59,15 +63,24 @@ public class GameManager : Singleton<GameManager>
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    private void Update()
+    {
+        timeLeft -= Time.deltaTime;
+
+        minutes = Mathf.FloorToInt(timeLeft / 60);
+        seconds = Mathf.FloorToInt(timeLeft % 60);
+        timeLeftText.text = string.Format("Time Left: {0}:{1:00}", minutes > 0? minutes : 0, seconds > 0 ? seconds : 0);
+
+        if (timeLeft <= 0)
+        {
+            WinGame();
+        }
+    }
 
     public void AddScore(int points)
     {
         score += points;
         UpdateScore(score);
-        if (score >= 100)
-        {
-            WinGame();
-        }
     }
 
     private void UpdateScore(int newScore)

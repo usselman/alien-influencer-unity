@@ -87,6 +87,7 @@ public class Building : MonoBehaviour
         StartCoroutine(StallDisableStandingBuildingObjects());
         buildingDestroyed.SetActive(true);
         CurrentState = BuildingState.IsDestroyed;
+        GameManager.Instance.AddScore(10);
     }
     void IsDestroyed()
     {
@@ -109,7 +110,7 @@ public class Building : MonoBehaviour
         damageProgressBar.SetValue(currentDamage, maxDamage, false);
         if (currentDamage >= maxDamage)
         {
-            StartDestroyed();
+            CurrentState = BuildingState.StartDestroyed;
         }
     }
 

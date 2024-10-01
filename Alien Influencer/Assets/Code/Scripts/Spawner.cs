@@ -152,6 +152,9 @@ class PersonMovement : MonoBehaviour
         float x = centerPosition.x + Mathf.Cos(radian) * radius;
         float z = centerPosition.z + Mathf.Sin(radian) * radius;
 
-        transform.position = new Vector3(x, transform.position.y, z);
+        Vector3 destination = new Vector3(x, transform.position.y, z);
+
+        transform.LookAt(destination);
+        transform.position = destination;
     }
 }
