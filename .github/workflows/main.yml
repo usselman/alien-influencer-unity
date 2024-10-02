@@ -1,0 +1,44 @@
+name: Build and Deploy WebGL to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build WebGL
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Set up Unity for building
+    - name: Setup Unity
+      uses: game-ci/unity-builder@v2
+      with:
+        version: 2022.3.7f1
+        targetPlatform: WebGL
+
+    # Build the project
+    - name: Build WebGL
+      run: |
+        mkdir -p build
+        unity-editor -batchmode -nographics -quit \
+        -projectPath . \
+        -buildTarget WebGL \
+        -executeMethod BuildScript.PerformBuild \
+        -buildPath build/WebGL/
+
+    # Upload the WebGL build to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/WebGL
+        publish_branch: gh-pages
