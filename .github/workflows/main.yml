@@ -30,7 +30,7 @@ jobs:
       run: |
         mkdir -p build
         unity-editor -batchmode -nographics -quit \
-        -projectPath ./Alien Influencer \
+        -projectPath "./Alien Influencer" \
         -buildTarget WebGL \
         -executeMethod BuildScript.PerformBuild \
         -buildPath build/WebGL/
