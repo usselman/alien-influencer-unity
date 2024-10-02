@@ -25,12 +25,12 @@ jobs:
         version: 2022.3.7f1
         targetPlatform: WebGL
 
-    # Build the project in AlienInfluencer directory
+    # Build the project in Alien Influencer directory
     - name: Build WebGL
       run: |
         mkdir -p build
         unity-editor -batchmode -nographics -quit \
-        -projectPath ./AlienInfluencer \
+        -projectPath ./Alien Influencer \
         -buildTarget WebGL \
         -executeMethod BuildScript.PerformBuild \
         -buildPath build/WebGL/
