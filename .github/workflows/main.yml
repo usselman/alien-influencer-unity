@@ -3,10 +3,10 @@ name: Build and Deploy WebGL to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - test-ci  # Trigger on pushes to the main branch
   pull_request:
     branches:
-      - main
+      - test-ci
 
 jobs:
   build:
