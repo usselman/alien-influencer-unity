@@ -62,7 +62,6 @@ public class UfoSuction : MonoBehaviour
                     /*
                     ! Probably need better way to add score + manage different point values
                     */
-                    ScoreManager.instance.AddScore(scorePoint);
                 }
             }
         }
