@@ -17,15 +17,7 @@ jobs:
     # Checkout the repository
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    # Set up Unity for building
-    - name: Setup Unity
-      uses: game-ci/unity-builder@v2
-      with:
-        version: 2022.3.7f1
-        targetPlatform: WebGL
-
-
+      
     # Debug: Print expected project path and check for Assets subfolder
     - name: Check Project Path and Assets folder
       run: |
@@ -40,6 +32,15 @@ jobs:
         fi
         echo "Checking the contents of the expected project path:"
         ls -la "./Alien Influencer"
+
+
+    # Set up Unity for building
+    - name: Setup Unity
+      uses: game-ci/unity-builder@v2
+      with:
+        version: 2022.3.7f1
+        targetPlatform: WebGL
+
 
     # Build the project in Alien Influencer directory
     - name: Build WebGL
