@@ -33,27 +33,28 @@ jobs:
         echo "Checking the contents of the expected project path:"
         ls -la "./Alien Influencer"
 
-
-    # Set up Unity for building
+    # Set up Unity for building (inside the project directory)
     - name: Setup Unity
+      working-directory: "./Alien Influencer"
       uses: game-ci/unity-builder@v2
       with:
         version: 2022.3.7f1
         targetPlatform: WebGL
 
-
     # Build the project in Alien Influencer directory
     - name: Build WebGL
+      working-directory: "./Alien Influencer"
       run: |
         mkdir -p build
         unity-editor -batchmode -nographics -quit \
-        -projectPath "./Alien Influencer" \
+        -projectPath . \
         -buildTarget WebGL \
         -executeMethod BuildScript.PerformBuild \
         -buildPath build/WebGL/
 
     # Upload the WebGL build to GitHub Pages
     - name: Deploy to GitHub Pages
+      working-directory: "./Alien Influencer"
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
