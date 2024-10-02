@@ -24,7 +24,7 @@ jobs:
       with:
         version: 2022.3.7f1
         targetPlatform: WebGL
-        projectPath: "./Alien Influencer" \
+        projectPath: "./Alien Influencer"
 
     # Build the project in Alien Influencer directory
     - name: Build WebGL
