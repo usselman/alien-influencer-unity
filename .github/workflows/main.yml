@@ -3,10 +3,10 @@ name: Build and Deploy WebGL to GitHub Pages
 on:
   push:
     branches:
-      - test-ci  # Trigger on pushes to the main branch
+      - main  # Trigger on pushes to the main branch
   pull_request:
     branches:
-      - test-ci
+      - main
 
 jobs:
   build:
@@ -17,22 +17,6 @@ jobs:
     # Checkout the repository
     - name: Checkout repository
       uses: actions/checkout@v3
-      
-    # Debug: Print expected project path and check for Assets subfolder
-    - name: Check Project Path and Assets folder
-      run: |
-        echo "Expected project path: ./Alien Influencer"
-        echo "Current directory contents:"
-        ls -la
-        echo "Checking if Assets folder exists in the expected project path..."
-        if [ -d "./Alien Influencer/Assets" ]; then
-          echo "Assets folder found in './Alien Influencer'"
-        else
-          echo "Assets folder NOT found in './Alien Influencer'."
-        fi
-        echo "Checking the contents of the expected project path:"
-        ls -la "./Alien Influencer"
-
 
     # Set up Unity for building
     - name: Setup Unity
@@ -41,7 +25,6 @@ jobs:
         version: 2022.3.7f1
         targetPlatform: WebGL
         path: "./Alien Influencer" \
-
 
     # Build the project in Alien Influencer directory
     - name: Build WebGL
@@ -52,7 +35,6 @@ jobs:
         -buildTarget WebGL \
         -executeMethod BuildScript.PerformBuild \
         -buildPath build/WebGL/
-
     # Upload the WebGL build to GitHub Pages
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
