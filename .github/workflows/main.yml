@@ -25,6 +25,22 @@ jobs:
         version: 2022.3.7f1
         targetPlatform: WebGL
 
+
+    # Debug: Print expected project path and check for Assets subfolder
+    - name: Check Project Path and Assets folder
+      run: |
+        echo "Expected project path: ./Alien Influencer"
+        echo "Current directory contents:"
+        ls -la
+        echo "Checking if Assets folder exists in the expected project path..."
+        if [ -d "./Alien Influencer/Assets" ]; then
+          echo "Assets folder found in './Alien Influencer'"
+        else
+          echo "Assets folder NOT found in './Alien Influencer'."
+        fi
+        echo "Checking the contents of the expected project path:"
+        ls -la "./Alien Influencer"
+
     # Build the project in Alien Influencer directory
     - name: Build WebGL
       run: |
