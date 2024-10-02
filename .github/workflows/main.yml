@@ -20,11 +20,11 @@ jobs:
 
     # Set up Unity for building
     - name: Setup Unity
-      uses: game-ci/unity-builder@v2
+      uses: game-ci/unity-builder@v4
       with:
         version: 2022.3.7f1
         targetPlatform: WebGL
-        path: "./Alien Influencer" \
+        projectPath: /Alien Influencer
 
     # Build the project in Alien Influencer directory
     - name: Build WebGL
