@@ -14,7 +14,7 @@ public class UfoSuction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") || Input.GetKey(KeyCode.Z))
         {
             SuckUpPeople();
             if (!suctionConeEffect.isPlaying)

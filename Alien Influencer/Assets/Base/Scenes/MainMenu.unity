@@ -2485,7 +2485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4072,7 +4072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3420556218193743673, guid: a9e8e826ab2a7be4e82b2feedda52835, type: 3}
       propertyPath: m_text
-      value: v0.1.0
+      value: v0.1.3
       objectReference: {fileID: 0}
     - target: {fileID: 3420556218193743673, guid: a9e8e826ab2a7be4e82b2feedda52835, type: 3}
       propertyPath: m_fontSize
@@ -13683,8 +13683,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 520316424}
   - {fileID: 1012591927}
+  - {fileID: 520316424}
   - {fileID: 2216244148651303360}
   m_Father: {fileID: 5488983083574855288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
